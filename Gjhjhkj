@@ -1,0 +1,311 @@
+<!doctype html>
+<html>
+    <head> 
+        <meta charset="UTF-8"> 
+        <meta name="viewport" id="viewport" content="width=device-width, initial-scale=1"> 
+        <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+        <title>My Websitefhfhfgg</title>
+    </head> 
+    <body> 
+        <h1>My Websitefhfhfgg</h1>
+        <div>
+            Hello World! 
+        </div>  
+   
+
+```html
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Manoj VIP - Final Master Mura</title>
+    
+    <!-- Firebase Libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+    <style>
+        :root { --p: #ff0055; --g: #ffd700; --blue: #0095f6; --bg: #000; --card: #121212; --txt: #fff; --wa: #25d366; }
+        * { box-sizing: border-box; font-family: -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: var(--bg); color: var(--txt); overflow: hidden; }
+
+        /* 🔔 Toast Message Box */
+        #toast { position: fixed; top: 15px; left: 50%; transform: translateX(-50%); background: var(--p); color: white; padding: 12px 25px; border-radius: 30px; font-weight: bold; z-index: 10000; display: none; box-shadow: 0 0 20px var(--p); text-align: center; min-width: 280px; }
+
+        /* 📱 Screens Manager */
+        .scr { display: none; width: 100%; height: calc(100vh - 65px); overflow-y: auto; overflow-x: hidden; }
+        .active { display: block; }
+
+        /* 🚜 LIVE TRACTOR PATTI */
+        #tractor { background: #1a1a1a; padding: 6px; border-bottom: 1.2px solid var(--p); height: 38px; overflow: hidden; white-space: nowrap; display: flex; align-items: center; }
+        .t-item { display: inline-flex; align-items: center; margin-right: 35px; animation: slide 15s linear infinite; }
+        .t-item img { width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--g); margin-right: 8px; }
+        @keyframes slide { from { transform: translateX(100vw); } to { transform: translateX(-100%); } }
+
+        /* 💰 KONE VALA EARN BUTTON */
+        #money-btn { position: fixed; top: 45px; right: 10px; width: 42px; height: 42px; background: linear-gradient(45deg, var(--p), orange); border-radius: 50%; border: 2px solid #fff; z-index: 5000; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; box-shadow: 0 0 15px var(--p); cursor: pointer; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% {transform:scale(1);} 50% {transform:scale(1.1);} 100% {transform:scale(1);} }
+
+        /* 👤 PROFILE HEADER (Instagram Style) */
+        .u-header { padding: 15px; border-bottom: 1px solid #222; }
+        .u-row { display: flex; align-items: center; gap: 15px; }
+        .m-dp { width: 75px; height: 75px; border-radius: 50%; border: 2.5px solid var(--p); padding: 2px; object-fit: cover; }
+        .stat-box { flex: 1; text-align: center; }
+        .stat-box b { display: block; font-size: 16px; color: #fff; }
+        .stat-box span { font-size: 10px; color: #888; }
+
+        /* 🏎️ ADS BANNER */
+        #vip-banner { width: 94%; height: 135px; margin: 10px 3%; border-radius: 15px; border: 2px solid var(--p); background-size: cover; background-position: center; display: flex; align-items: flex-end; overflow: hidden; cursor: pointer; position: relative; box-shadow: 0 0 15px rgba(255, 0, 85, 0.4); }
+        #vip-banner span { background: rgba(0,0,0,0.85); width: 100%; padding: 6px; text-align: center; color: var(--g); font-size: 10px; font-weight: bold; }
+
+        /* 🛠️ Admin Special Control Panel */
+        #adm-box { display: none; background: #1a1a1a; padding: 15px; margin: 10px; border: 1.5px solid var(--g); border-radius: 12px; }
+
+        /* 🎁 MITHAI BONUS BUTTON */
+        #mithai-btn { display: none; width: 92%; margin: 10px 4%; padding: 14px; background: linear-gradient(45deg, #f44336, #ff9800); color: white; border-radius: 12px; font-weight: bold; text-align: center; border: none; cursor: pointer; }
+
+        /* 🖼️ POST UI (Patak Style) */
+        .post { background: var(--card); margin-bottom: 20px; border-bottom: 1px solid #333; position: relative; }
+        .p-head { display: flex; align-items: center; padding: 10px; }
+        .p-head img { width: 35px; height: 35px; border-radius: 50%; border: 1.5px solid var(--p); cursor: pointer; }
+        .p-head-info { margin-left: 10px; flex: 1; cursor: pointer; }
+        .p-head-info b { font-size: 13px; display: block; }
+        .p-head-info span { font-size: 9px; color: var(--g); }
+        .btn-follow { background: var(--blue); color: #fff; border: none; padding: 5px 12px; border-radius: 5px; font-weight: bold; font-size: 10px; }
+
+        .p-img-box { width: 100%; height: 310px; background: #000; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .p-img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        
+        /* 🏎️ Gadi & 📜 Scrolling Patti */
+        .gadi { position: absolute; top: 10px; left: -50px; font-size: 22px; animation: drive 4s linear infinite; z-index: 5; }
+        @keyframes drive { from { left: -50px; } to { left: 100%; } }
+        .patti { position: absolute; bottom: 0; width: 100%; background: rgba(255, 0, 85, 0.7); height: 22px; overflow: hidden; z-index: 5; }
+        .patti-txt { position: absolute; white-space: nowrap; color: #fff; font-size: 11px; font-weight: bold; animation: scroll-p 10s linear infinite; }
+        @keyframes scroll-p { from { left: 100%; } to { left: -100%; } }
+
+        /* Eye / Report Bar */
+        .p-report { display: flex; justify-content: space-around; padding: 8px; background: #0a0a0a; font-size: 10px; color: #aaa; border-top: 1px solid #222; }
+        .p-report b { color: white; }
+
+        /* 🧭 BOTTOM NAVIGATION */
+        .nav { position: fixed; bottom: 0; width: 100%; height: 65px; background: #000; border-top: 1px solid #222; display: flex; align-items: center; z-index: 2000; }
+        .n-item { flex: 1; text-align: center; font-size: 22px; cursor: pointer; color: #fff; position: relative; }
+        .badge { position: absolute; top: -2px; right: 28%; background: red; width: 10px; height: 10px; border-radius: 50%; border: 2px solid #000; display: none; }
+
+        /* 📩 Sandesh Items */
+        .notif-item { background: #1a1a1a; padding: 12px; border-radius: 10px; margin: 10px; border-left: 4px solid var(--p); display: flex; align-items: center; gap: 10px; }
+        .notif-item img { width: 35px; height: 35px; border-radius: 50%; }
+
+        /* Photo Grid for Profiles */
+        .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; }
+        .grid img { width: 100%; height: 110px; object-fit: cover; background: #111; }
+
+        /* Utility / Buttons */
+        .v-in { width: 100%; padding: 14px; margin: 8px 0; background: #111; border: 1px solid #333; color: #fff; border-radius: 10px; outline: none; font-size: 14px; }
+        .v-btn { width: 100%; padding: 14px; background: var(--p); color: #fff; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 5px; }
+        .modal-rule { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9000; align-items: center; justify-content: center; padding: 20px; }
+        .rule-card { background: #1a1a1a; width: 100%; max-width: 340px; padding: 25px; border-radius: 25px; border: 2.5px solid var(--g); text-align: center; }
+        .rule-list { text-align: left; font-size: 15px; line-height: 2.2; color: #fff; margin-bottom: 25px; }
+    </style>
+</head>
+<body>
+
+    <div id="toast"></div>
+
+    <!-- 💰 CORNER EARN INFO BUTTON -->
+    <div id="money-btn" onclick="showRules()">₹</div>
+
+    <!-- 🔐 LOGIN SCREEN -->
+    <div id="scr-login" class="scr active" style="padding: 40px 20px; text-align: center; height: 100vh;">
+        <h1 style="color:var(--p); margin:0;">MANOJ VIP 🤴</h1>
+        <p style="color:var(--g); font-size:12px; margin-top:5px;">Admin: Manoj Guna | 9754560120</p>
+        <div onclick="document.getElementById('f-dp').click()" style="width:105px; height:105px; border:3px solid var(--p); border-radius:50%; margin:25px auto; overflow:hidden; display:flex; align-items:center; justify-content:center; cursor:pointer; background:#222;">
+            <img id="dp-prev" style="width:100%; height:100%; object-fit:cover; display:none;">
+            <span id="dp-txt" style="color:#666">DP लगायें</span>
+        </div>
+        <input type="file" id="f-dp" hidden accept="image/*" onchange="readImg(this, 'dp-prev')">
+        
+        <input type="text" id="v-name" class="v-in" placeholder="आपका नाम लिखें">
+        <input type="email" id="v-mail" class="v-in" placeholder="Gmail ID">
+        <input type="password" id="v-pass" class="v-in" placeholder="पासवर्ड (मोबाइल नंबर)">
+        
+        <button id="login-btn" class="v-btn" onclick="register()">Online धमाका लॉगिन 🚀</button>
+    </div>
+
+    <!-- 📱 MAIN APP CONTENT -->
+    <div id="scr-app" style="display:none;">
+        <div id="tractor"><div id="t-list"></div></div>
+
+        <!-- 🏠 Home Feed -->
+        <div id="scr-home" class="scr active">
+            <div class="u-header">
+                <div class="u-row">
+                    <img id="my-dp-img" class="m-dp" onclick="showScr('profile')">
+                    <div class="stat-box"><b id="u-foll">0</b><span>Followers</span></div>
+                    <div class="stat-box"><b id="u-bal">₹0</b><span>Wallet</span></div>
+                    <div class="stat-box" onclick="window.location.href='https://wa.me/919754560120'"><b style="color:var(--wa)">💬</b><span>WhatsApp</span></div>
+                </div>
+            </div>
+
+            <!-- 🎁 MONETIZE BUTTON -->
+            <button id="mithai-btn" onclick="claim2000()">5000 Follower पूरे! ₹2000 मिठाई लें 🥳</button>
+
+            <!-- ADS BANNER -->
+            <div id="vip-banner" onclick="window.open(bLink)"><span id="banner-txt">Manoj Guna VIP धमाका लिंक ➔</span></div>
+            
+            <!-- 🛠️ Secret Admin Remot -->
+            <div id="adm-box">
+                <b style="color:var(--g)">ADMIN कंट्रोल:</b>
+                <input type="text" id="ad-img" class="v-in" style="padding:8px" placeholder="बैनर फोटो लिंक">
+                <input type="text" id="ad-url" class="v-in" style="padding:8px" placeholder="काजल / Game लिंक">
+                <button class="v-btn" style="padding:10px; background:var(--blue)" onclick="updateBanner()">Update ✅</button>
+                <div id="adm-pending-list" style="margin-top:15px;"></div>
+            </div>
+
+            <div id="feed"></div>
+        </div>
+
+        <!-- 🔍 ID Open (Profile View) -->
+        <div id="scr-user" class="scr">
+            <div style="padding:10px;"><button onclick="showScr('home')" style="background:none; border:none; color:var(--blue); font-weight:bold;">◀ वापस</button></div>
+            <div class="u-header">
+                <div class="u-row">
+                    <img id="oth-dp" class="m-dp">
+                    <div class="stat-box"><b id="oth-posts">0</b><span>Photos</span></div>
+                    <div class="stat-box"><b id="oth-foll">0</b><span>Followers</span></div>
+                    <button id="oth-fol-btn" class="btn-follow" style="padding:10px 15px;">FOLLOW</button>
+                </div>
+                <h3 id="oth-name" style="margin-left:20px; color:var(--g);">Name</h3>
+            </div>
+            <div id="oth-grid" class="grid" style="margin-top:20px;"></div>
+        </div>
+
+        <!-- 📩 Sandesh Screen -->
+        <div id="scr-msg" class="scr" style="padding:15px;">
+            <h3 style="color:var(--p)">आपके संदेश 📩</h3>
+            <div id="notif-list"></div>
+        </div>
+
+        <!-- ➕ Upload Screen -->
+        <div id="scr-up" class="scr" style="padding:20px;">
+            <h3>नया फोटो पोस्ट करें</h3>
+            <input type="text" id="up-title" class="v-in" placeholder="टाइटल (पट्टी पर चलेगा)">
+            <input type="file" id="up-file" class="v-in" onchange="readImg(this, 'up-prev-img')">
+            <img id="up-prev-img" style="width:100%; max-height:200px; display:none; border-radius:10px; margin-top:10px; object-fit:contain;">
+            <button class="v-btn" onclick="publish()">ADMIN को भेजें 🚀</button>
+        </div>
+
+        <!-- 👤 Profile Screen -->
+        <div id="scr-profile" class="scr">
+            <div class="u-header">
+                <div class="u-row">
+                    <img id="my-dp-img-p" class="m-dp">
+                    <div class="stat-box"><b id="my-p-count">0</b><span>Photos</span></div>
+                    <div class="stat-box"><b id="my-f-count">0</b><span>Followers</span></div>
+                    <div class="stat-box"><b id="my-b-count">₹0</b><span>Wallet</span></div>
+                </div>
+                <h3 id="my-name-top" style="margin-left:20px; color:var(--g)">Manoj</h3>
+                <button class="v-btn" style="padding:5px; background:#333; margin:10px 4%; width:92%;" onclick="logout()">Logout</button>
+            </div>
+            <div id="my-grid" class="grid" style="margin-top:10px;"></div>
+        </div>
+
+        <!-- 🧭 BOTTOM NAV -->
+        <nav class="nav">
+            <div class="n-item" onclick="showScr('home')">🏠</div>
+            <div class="n-item" onclick="showScr('up')">➕</div>
+            <div class="n-item" onclick="showScr('msg')">📩 <div id="msg-badge" class="badge"></div></div>
+            <div class="n-item" onclick="showScr('profile')">👤</div>
+        </nav>
+    </div>
+
+    <!-- 📜 नियम बोर्ड (Popup) -->
+    <div id="rule-modal" class="modal-rule" onclick="this.style.display='none'">
+        <div class="rule-card" onclick="event.stopPropagation()">
+            <h2 style="color:var(--g);">कमाई के नियम 💰</h2>
+            <div class="rule-list">
+                1. 🔗 <b>शेयर:</b> हर लिंक शेयर पर <b>₹5</b>।<br>
+                2. 📸 <b>फोटो:</b> एप्रूव होने पर <b>₹10</b>।<br>
+                3. 👥 <b>फॉलोअर्स:</b> 5000 होने पर <b>₹2000</b> बोनस।<br>
+                4. 🤴 <b>जरुरी:</b> मनोज भाई को फॉलो करना होगा।
+            </div>
+            <button class="v-btn" style="background:#ff0055;" onclick="document.getElementById('rule-modal').style.display='none'">समझ गया ✅</button>
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIG ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyCaNFZqRqZKlhdKp9p4LGsnGwBok5x6f6g",
+            databaseURL: "https://manoj-photo-aafec-default-rtdb.firebaseio.com",
+            projectId: "manoj-photo-aafec"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        let me = null; let tempImg = ""; let photoSet = false; let bLink = "#";
+
+        function showMsg(t) { let b = document.getElementById('toast'); b.innerText = t; b.style.display = 'block'; setTimeout(() => b.style.display = 'none', 3000); }
+
+        function readImg(input, target) {
+            const r = new FileReader();
+            r.onload = e => {
+                document.getElementById(target).src = e.target.result;
+                document.getElementById(target).style.display = 'block';
+                if(target === 'dp-prev') photoSet = true;
+                if(target === 'up-prev-img') tempImg = e.target.result;
+            };
+            r.readAsDataURL(input.files[0]);
+        }
+
+        function register() {
+            let n = document.getElementById('v-name').value, g = document.getElementById('v-mail').value.trim().toLowerCase(), p = document.getElementById('v-pass').value, d = document.getElementById('dp-prev').src;
+            if(!n || !g || !p || !photoSet) return showMsg("❌ पूरी जानकारी भरें!");
+            
+            showMsg("⏳ लॉगिन हो रहा है...");
+            let uid = "u" + g.replace(/[.#$[\]]/g, "_");
+            db.ref('users/' + uid).once('value', s => {
+                if(s.exists() && s.val().password !== p) return showMsg("❌ गलत पासवर्ड!");
+                if(!s.exists()) db.ref('users/' + uid).set({ uid, name: n, gmail: g, password: p, dp: d, balance: 10, followers: 0, postCount: 0, monDone: false });
+                localStorage.setItem('vip_uid', uid);
+                location.reload();
+            });
+        }
+
+        function showScr(id) {
+            document.querySelectorAll('.scr').forEach(s => s.classList.remove('active'));
+            document.getElementById('scr-' + id).classList.add('active');
+            if(id === 'msg') document.getElementById('msg-badge').style.display = 'none';
+        }
+
+        function sync() {
+            if(me.password === "9754560120") document.getElementById('adm-box').style.display = 'block';
+            db.ref('settings/banner').on('value', s => { let d = s.val(); if(d){ document.getElementById('vip-banner').style.backgroundImage = `url('${d.img}')`; bLink = d.url; } });
+            
+            db.ref('users/' + me.uid).on('value', s => {
+                me = s.val();
+                if(!me) return;
+                document.getElementById('my-dp-img').src = me.dp;
+                document.getElementById('my-dp-img-p').src = me.dp;
+                document.getElementById('u-bal').innerText = "₹" + (me.balance || 0);
+                document.getElementById('u-foll').innerText = (me.followers || 0);
+                document.getElementById('my-b-count').innerText = "₹" + (me.balance || 0);
+                document.getElementById('my-f-count').innerText = (me.followers || 0);
+                document.getElementById('my-p-count').innerText = (me.postCount || 0);
+                if(me.followers >= 5000 && !me.monDone) document.getElementById('mithai-btn').style.display = 'block';
+            });
+
+            db.ref('alerts/' + me.uid).on('value', s => {
+                let h = ""; let count = 0;
+                s.forEach(c => { count++; let n = c.val(); h = `<div class="notif-item"><img src="${n.dp}"><span><b>${n.name}</b> ने संदेश भेजा: "${n.msg}"</span></div>` + h; });
+                document.getElementById('notif-list').innerHTML = h || "<p style='margin:20px; color:#666;'>कोई संदेश नहीं है।</p>";
+                if(count > 0 && !document.getElementById('scr-msg').classList.contains('active')) document.getElementById('msg-badge').style.display = 'block';
+            });
+
+            db.ref('posts').on('value', s => {
+                let h = ""; let myGrid = "";
+                s.forEach(child => {
+                    let p = child.val();g
+                    h = `<div class="post">
+                        <div class="p-head"><img src="${p.dp}" onclick="openUser('${p.uid}')"><div class="p-head-info" onclick="openUser('${p.uid}')"><b>${p.name}</b><span id="stat-${p.pid}">Report...</span></div><button class="btn-follow" onclick="follow('${
